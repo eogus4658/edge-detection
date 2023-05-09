@@ -42,9 +42,20 @@ namespace DetectReflectObject
 
         private void grayButton_Click(object sender, EventArgs e)
         {
-            Mat image = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBoxImage.Image);
-            Mat grayImage = ManualDetector.shared.toGrayScale(image);
-            pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(grayImage);
+            try
+            {
+                Mat image = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBoxImage.Image);
+                Mat grayImage = ManualDetector.shared.toGrayScale(image);
+                pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(grayImage);
+            } catch
+            {
+                MessageBox.Show("There's no image to convert");
+            }   
+        }
+
+        private void binaryButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -32,6 +32,7 @@ namespace DetectReflectObject
             this.pictureBoxImage = new System.Windows.Forms.PictureBox();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.grayButton = new System.Windows.Forms.Button();
+            this.binaryButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,11 +65,22 @@ namespace DetectReflectObject
             this.grayButton.UseVisualStyleBackColor = true;
             this.grayButton.Click += new System.EventHandler(this.grayButton_Click);
             // 
+            // binaryButton
+            // 
+            this.binaryButton.Location = new System.Drawing.Point(347, 98);
+            this.binaryButton.Name = "binaryButton";
+            this.binaryButton.Size = new System.Drawing.Size(89, 23);
+            this.binaryButton.TabIndex = 3;
+            this.binaryButton.Text = "binary scale";
+            this.binaryButton.UseVisualStyleBackColor = true;
+            this.binaryButton.Click += new System.EventHandler(this.binaryButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(533, 315);
+            this.Controls.Add(this.binaryButton);
             this.Controls.Add(this.grayButton);
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.pictureBoxImage);
@@ -84,6 +96,7 @@ namespace DetectReflectObject
         private System.Windows.Forms.PictureBox pictureBoxImage;
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.Button grayButton;
+        private System.Windows.Forms.Button binaryButton;
     }
 }
 
