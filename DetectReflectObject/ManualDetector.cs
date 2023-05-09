@@ -52,8 +52,28 @@ namespace DetectReflectObject
             //Cv2.Canny(원본, 결과, 하위 임계값, 상위 임계값, 소벨 연산 마스크 크기, L2 그래디언트)
             // 픽셀이 상위 임계값보다 큰 기울기를 가지면 픽셀을 가장자리로 분류하고,
             // 하위 임계값보다 낮은 경우 가장자리로 고려하지 않는다.
-            Cv2.Canny(image, cannyImage, 100, 200, 3, true);
+            Cv2.Canny(image, cannyImage, 100, 500, 3, true);
             return cannyImage;
+        }
+
+        // 외곽선 검출
+        public List<Point[]> getContours(Mat image)
+        {
+            Point[][] contours;
+            HierarchyIndex[] hierarchy;
+
+            Cv2.FindContours(image, out contours, out hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxTC89KCOS);
+
+            List<Point[]> new_contours = new List<Point[]>();
+            foreach (Point[] p in contours)
+            {
+                double length = Cv2.ArcLength(p, true);
+                if (length > 100) // 윤곽선 길이 100 이하는 무시
+                {
+                    new_contours.Add(p);
+                }
+            }
+            return new_contours;
         }
     }
 }

@@ -73,7 +73,11 @@ namespace DetectReflectObject
             {
                 Mat image = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBoxImage.Image);
                 Mat cannyImage = ManualDetector.shared.cannyEdge(image);
-                pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(cannyImage);
+                List<OpenCvSharp.Point[]> contours = ManualDetector.shared.getContours(cannyImage);
+                Mat contourImage = Cv2.ImRead(image_dir);
+                Cv2.DrawContours(contourImage, contours, -1, new Scalar(0, 0, 255), 30, LineTypes.AntiAlias, null, 1);
+
+                pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(contourImage);
             }
             catch (Exception ex)
             {
