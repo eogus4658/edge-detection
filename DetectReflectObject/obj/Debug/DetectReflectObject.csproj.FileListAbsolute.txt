@@ -1,5 +1,0 @@
-C:\TrueProj.2023\공간영상 수동반사객체 구현업무\DetectReflectObject\DetectReflectObject\obj\Debug\DetectReflectObject.csprojAssemblyReference.cache
-C:\TrueProj.2023\공간영상 수동반사객체 구현업무\DetectReflectObject\DetectReflectObject\obj\Debug\DetectReflectObject.Form1.resources
-C:\TrueProj.2023\공간영상 수동반사객체 구현업무\DetectReflectObject\DetectReflectObject\obj\Debug\DetectReflectObject.Properties.Resources.resources
-C:\TrueProj.2023\공간영상 수동반사객체 구현업무\DetectReflectObject\DetectReflectObject\obj\Debug\DetectReflectObject.csproj.GenerateResource.cache
-C:\TrueProj.2023\공간영상 수동반사객체 구현업무\DetectReflectObject\DetectReflectObject\obj\Debug\DetectReflectObject.csproj.CoreCompileInputs.cache
