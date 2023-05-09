@@ -47,9 +47,9 @@ namespace DetectReflectObject
                 Mat image = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBoxImage.Image);
                 Mat grayImage = ManualDetector.shared.toGrayScale(image);
                 pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(grayImage);
-            } catch
+            } catch(Exception ex)
             {
-                MessageBox.Show("There's no image to convert");
+                MessageBox.Show(ex.Message);
             }   
         }
 
@@ -58,12 +58,12 @@ namespace DetectReflectObject
             try
             {
                 Mat image = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBoxImage.Image);
-                Mat grayImage = ManualDetector.shared.toGrayScale(image);
-                pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(grayImage);
+                Mat binaryImage = ManualDetector.shared.toBinaryScale(image);
+                pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(binaryImage);
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("There's no image to convert");
+                MessageBox.Show(ex.Message);
             }
         }
     }
