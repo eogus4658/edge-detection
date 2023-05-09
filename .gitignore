@@ -1,5 +1,5 @@
-.vs\
+.vs/
 
-DetectReflectObject\bin\
+DetectReflectObject/bin
 
-DetectReflectObject\obj\
+DetectReflectObject/obj
