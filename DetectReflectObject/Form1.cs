@@ -58,8 +58,22 @@ namespace DetectReflectObject
             try
             {
                 Mat image = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBoxImage.Image);
-                Mat binaryImage = ManualDetector.shared.toBinaryScale(image);
+                Mat binaryImage = ManualDetector.shared.toBinaryScale(image, 100); // image, thresh
                 pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(binaryImage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void cannyButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Mat image = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBoxImage.Image);
+                Mat cannyImage = ManualDetector.shared.cannyEdge(image);
+                pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(cannyImage);
             }
             catch (Exception ex)
             {
