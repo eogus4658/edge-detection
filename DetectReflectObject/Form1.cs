@@ -44,6 +44,7 @@ namespace DetectReflectObject
         {
             Mat image = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBoxImage.Image);
             Mat grayImage = ManualDetector.shared.toGrayScale(image);
+            pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(grayImage);
         }
     }
 }
