@@ -58,29 +58,31 @@ namespace DetectReflectObject
         }
 
         // 4. 외곽선 검출
-        public List<Point[]> getContours(Mat image)
+        public List<Point[]> getContours(Mat image, RetrievalModes retrieval, ContourApproximationModes modes, int lengthNoise, double approxRate)
         {
             Point[][] contours;
             HierarchyIndex[] hierarchy;
 
             // 외곽선 검출
-            Cv2.FindContours(image, out contours, out hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxTC89KCOS);
+            Cv2.FindContours(image, out contours, out hierarchy, retrieval, modes);
 
             // 외곽선 필터링
             List<Point[]> new_contours = new List<Point[]>();
             foreach (Point[] p in contours)
             {
-                double length = Cv2.ArcLength(p, true);
-                if (length > 500) // 윤곽선 길이 500 이하는 무시
-                {
-                    new_contours.Add(p);
-                    // 추출한 외곽선 근사화 (근사치 정확도 : 전체 길이의 2%, 하이퍼파라미터)
-                    Point[] new_points = Cv2.ApproxPolyDP(p, length * 0.02, true);
-                    if (new_points.Length == 4) // 코너가 4개인 것만 외곽선에 추가
-                    {
-                        new_contours.Add(new_points);
-                    }
-                }
+                new_contours.Add(p);
+                //double length = Cv2.ArcLength(p, true);
+                //if (length > lengthNoise) // 윤곽선 길이 lengthNoise 이하는 무시
+                //{
+                    
+                //    // 추출한 외곽선 근사화 (근사치 정확도 : 전체 길이의 x%, 하이퍼파라미터)
+                //    //Point[] new_points = Cv2.ApproxPolyDP(p, length * approxRate, true);
+                //    //new_contours.Add(new_points);
+                //    //if (new_points.Length == 4) // 코너가 4개인 것만 외곽선에 추가
+                //    //{
+                //    //    new_contours.Add(new_points);
+                //    //}
+                //}
             }
             return new_contours;
         }

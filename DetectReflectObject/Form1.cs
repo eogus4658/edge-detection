@@ -20,8 +20,19 @@ namespace DetectReflectObject
 
         
         string image_dir = "";
-        int canny_thresh1 = 500;
-        int canny_thresh2 = 500;
+        // Canny Edge Param
+        int canny_thresh1 = 0;
+        int canny_thresh2 = 100;
+
+        // FindContours Param
+        RetrievalModes retrievalModes = RetrievalModes.Tree;
+        ContourApproximationModes contour_approxModes = ContourApproximationModes.ApproxTC89KCOS;
+
+        //ApproxPolyDP Param
+        double approxRate = 0.02;
+
+        // Noise Param
+        int length = 500;
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
@@ -89,7 +100,7 @@ namespace DetectReflectObject
             {
                 Mat image = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBoxImage.Image);
                 Mat cannyImage = ManualDetector.shared.cannyEdge(image, canny_thresh1, canny_thresh2);
-                List<OpenCvSharp.Point[]> contours = ManualDetector.shared.getContours(cannyImage);
+                List<OpenCvSharp.Point[]> contours = ManualDetector.shared.getContours(cannyImage, retrievalModes, contour_approxModes, length, approxRate);
                 Mat contourImage = Cv2.ImRead(image_dir);
                 Cv2.DrawContours(contourImage, contours, -1, new Scalar(0, 0, 255), 30, LineTypes.AntiAlias, null, 1);
 
