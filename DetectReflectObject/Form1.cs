@@ -20,6 +20,8 @@ namespace DetectReflectObject
 
         
         string image_dir = "";
+        int canny_thresh1 = 500;
+        int canny_thresh2 = 500;
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
@@ -72,11 +74,26 @@ namespace DetectReflectObject
             try
             {
                 Mat image = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBoxImage.Image);
-                Mat cannyImage = ManualDetector.shared.cannyEdge(image);
+                Mat cannyImage = ManualDetector.shared.cannyEdge(image, canny_thresh1, canny_thresh2);
+                pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(cannyImage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void detectContourButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Mat image = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBoxImage.Image);
+                Mat cannyImage = ManualDetector.shared.cannyEdge(image, canny_thresh1, canny_thresh2);
                 List<OpenCvSharp.Point[]> contours = ManualDetector.shared.getContours(cannyImage);
                 Mat contourImage = Cv2.ImRead(image_dir);
                 Cv2.DrawContours(contourImage, contours, -1, new Scalar(0, 0, 255), 30, LineTypes.AntiAlias, null, 1);
 
+                contourLabel.Text = String.Format("contourCount = {0}", contours.Count);
                 pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(contourImage);
             }
             catch (Exception ex)

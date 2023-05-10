@@ -34,6 +34,8 @@ namespace DetectReflectObject
             this.grayButton = new System.Windows.Forms.Button();
             this.binaryButton = new System.Windows.Forms.Button();
             this.cannyButton = new System.Windows.Forms.Button();
+            this.contourLabel = new System.Windows.Forms.Label();
+            this.detectContourButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,7 +50,7 @@ namespace DetectReflectObject
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(911, 34);
+            this.buttonLoad.Location = new System.Drawing.Point(914, 39);
             this.buttonLoad.Name = "buttonLoad";
             this.buttonLoad.Size = new System.Drawing.Size(75, 23);
             this.buttonLoad.TabIndex = 1;
@@ -58,7 +60,7 @@ namespace DetectReflectObject
             // 
             // grayButton
             // 
-            this.grayButton.Location = new System.Drawing.Point(911, 64);
+            this.grayButton.Location = new System.Drawing.Point(914, 69);
             this.grayButton.Name = "grayButton";
             this.grayButton.Size = new System.Drawing.Size(75, 23);
             this.grayButton.TabIndex = 2;
@@ -68,7 +70,7 @@ namespace DetectReflectObject
             // 
             // binaryButton
             // 
-            this.binaryButton.Location = new System.Drawing.Point(911, 93);
+            this.binaryButton.Location = new System.Drawing.Point(914, 98);
             this.binaryButton.Name = "binaryButton";
             this.binaryButton.Size = new System.Drawing.Size(89, 23);
             this.binaryButton.TabIndex = 3;
@@ -78,7 +80,7 @@ namespace DetectReflectObject
             // 
             // cannyButton
             // 
-            this.cannyButton.Location = new System.Drawing.Point(911, 123);
+            this.cannyButton.Location = new System.Drawing.Point(914, 128);
             this.cannyButton.Name = "cannyButton";
             this.cannyButton.Size = new System.Drawing.Size(89, 23);
             this.cannyButton.TabIndex = 4;
@@ -86,11 +88,32 @@ namespace DetectReflectObject
             this.cannyButton.UseVisualStyleBackColor = true;
             this.cannyButton.Click += new System.EventHandler(this.cannyButton_Click);
             // 
+            // contourLabel
+            // 
+            this.contourLabel.AutoSize = true;
+            this.contourLabel.Location = new System.Drawing.Point(874, 211);
+            this.contourLabel.Name = "contourLabel";
+            this.contourLabel.Size = new System.Drawing.Size(100, 12);
+            this.contourLabel.TabIndex = 5;
+            this.contourLabel.Text = "contourCount = 0";
+            // 
+            // detectContourButton
+            // 
+            this.detectContourButton.Location = new System.Drawing.Point(914, 158);
+            this.detectContourButton.Name = "detectContourButton";
+            this.detectContourButton.Size = new System.Drawing.Size(96, 23);
+            this.detectContourButton.TabIndex = 6;
+            this.detectContourButton.Text = "detect contour";
+            this.detectContourButton.UseVisualStyleBackColor = true;
+            this.detectContourButton.Click += new System.EventHandler(this.detectContourButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1041, 620);
+            this.Controls.Add(this.detectContourButton);
+            this.Controls.Add(this.contourLabel);
             this.Controls.Add(this.cannyButton);
             this.Controls.Add(this.binaryButton);
             this.Controls.Add(this.grayButton);
@@ -100,6 +123,7 @@ namespace DetectReflectObject
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -110,6 +134,8 @@ namespace DetectReflectObject
         private System.Windows.Forms.Button grayButton;
         private System.Windows.Forms.Button binaryButton;
         private System.Windows.Forms.Button cannyButton;
+        private System.Windows.Forms.Label contourLabel;
+        private System.Windows.Forms.Button detectContourButton;
     }
 }
 

@@ -46,31 +46,40 @@ namespace DetectReflectObject
             return thresImage;
         }
 
-        public Mat cannyEdge(Mat image)
+        // 3. Canny Edge 이진화
+        // - Cv2.Canny(원본, 결과, threshold1, threshold2, 소벨 연산 마스크 크기, L2 그래디언트)
+        // - threshold1 : 다른 엣지와의 인접 부분(엣지가 되기 쉬운 부분)에 있어 엣지인지 아닌지를 판단하는 임계값
+        // - threshold2 : 엣지인지 아닌지를 판단하는 임계값
+        public Mat cannyEdge(Mat image, int thresh1, int thresh2)
         {
             Mat cannyImage = new Mat();
-            //Cv2.Canny(원본, 결과, 하위 임계값, 상위 임계값, 소벨 연산 마스크 크기, L2 그래디언트)
-            // 픽셀이 상위 임계값보다 큰 기울기를 가지면 픽셀을 가장자리로 분류하고,
-            // 하위 임계값보다 낮은 경우 가장자리로 고려하지 않는다.
-            Cv2.Canny(image, cannyImage, 100, 500, 3, true);
+            Cv2.Canny(image, cannyImage, thresh1, thresh2, 3, true);
             return cannyImage;
         }
 
-        // 외곽선 검출
+        // 4. 외곽선 검출
         public List<Point[]> getContours(Mat image)
         {
             Point[][] contours;
             HierarchyIndex[] hierarchy;
 
+            // 외곽선 검출
             Cv2.FindContours(image, out contours, out hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxTC89KCOS);
 
+            // 외곽선 필터링
             List<Point[]> new_contours = new List<Point[]>();
             foreach (Point[] p in contours)
             {
                 double length = Cv2.ArcLength(p, true);
-                if (length > 100) // 윤곽선 길이 100 이하는 무시
+                if (length > 500) // 윤곽선 길이 500 이하는 무시
                 {
                     new_contours.Add(p);
+                    // 추출한 외곽선 근사화 (근사치 정확도 : 전체 길이의 2%, 하이퍼파라미터)
+                    Point[] new_points = Cv2.ApproxPolyDP(p, length * 0.02, true);
+                    if (new_points.Length == 4) // 코너가 4개인 것만 외곽선에 추가
+                    {
+                        new_contours.Add(new_points);
+                    }
                 }
             }
             return new_contours;
