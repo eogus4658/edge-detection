@@ -22,7 +22,7 @@ namespace DetectReflectObject
         string image_dir = "";
         // Canny Edge Param
         int canny_thresh1 = 0;
-        int canny_thresh2 = 100;
+        int canny_thresh2 = 1100;
 
         // FindContours Param
         RetrievalModes retrievalModes = RetrievalModes.Tree;
@@ -101,16 +101,36 @@ namespace DetectReflectObject
                 Mat image = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBoxImage.Image);
                 Mat cannyImage = ManualDetector.shared.cannyEdge(image, canny_thresh1, canny_thresh2);
                 List<OpenCvSharp.Point[]> contours = ManualDetector.shared.getContours(cannyImage, retrievalModes, contour_approxModes, length, approxRate);
-                Mat contourImage = Cv2.ImRead(image_dir);
-                Cv2.DrawContours(contourImage, contours, -1, new Scalar(0, 0, 255), 30, LineTypes.AntiAlias, null, 1);
-
+                // Cv2.DrawContours(contourImage, contours, -1, new Scalar(0, 0, 255), 30, LineTypes.AntiAlias, null, 1);
+                foreach (OpenCvSharp.Point[] contour in contours)
+                {
+                    cannyImage.FillConvexPoly(contour, Scalar.White, LineTypes.AntiAlias);
+                }
+                
                 contourLabel.Text = String.Format("contourCount = {0}", contours.Count);
-                pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(contourImage);
+                pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(cannyImage);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void runButton_Click(object sender, EventArgs e)
+        {
+            statusLabel.Text = "running...";
+            string in_path = "C:\\TrueProj.2023\\공간영상 수동반사객체 구현업무\\반사투과 객체 검출 소프트웨어_ETRI_2022년결과\\test\\input";
+            string out_path = "C:\\TrueProj.2023\\공간영상 수동반사객체 구현업무\\반사투과 객체 검출 소프트웨어_ETRI_2022년결과\\test\\output";
+            try
+            {
+                ManualDetector.shared.Run(in_path, out_path);
+                statusLabel.Text = "finished";
+            } 
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
     }
 }

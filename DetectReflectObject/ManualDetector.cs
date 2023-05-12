@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenCvSharp;
+using System.IO;
 
 namespace DetectReflectObject
 {
@@ -25,12 +26,57 @@ namespace DetectReflectObject
             }
         }
 
+        // toBinaryScale 1 param
+        // cannyEdge 2 param
+        // in_path 경로의 이미지들을 읽어서 반사객체 검출한 이미지를 out_path에 저장
+        public void Run(string in_path, string out_path)
+        {
+            string[] inputFiles = Directory.GetFiles(in_path);
+            foreach(string image_dir in inputFiles)
+            {
+                string file_name = Path.GetFileName(image_dir);
+                // 이미지 불러오기
+                Mat image = Cv2.ImRead(image_dir);
+
+                // image이 1채널이 아닌 경우 전처리 작업 진행
+                if(image.Channels() != 1)
+                {
+                    image = ManualDetector.shared.toGrayScale(image);
+                    image = ManualDetector.shared.toBinaryScale(image, 100);
+                    if (image.Channels() != 1)
+                    {
+                        throw new Exception("이미지 전처리 작업 실패");
+                    }
+                }
+
+                // canny edge 이미지 이진화
+                image = cannyEdge(image, 100, 1000);
+
+                // 외곽선 검출
+                List<Point[]> contours = getContours(image, RetrievalModes.Tree, ContourApproximationModes.ApproxTC89KCOS, 500, 0.02);
+
+                // ** 후처리 작업 - 외곽선 내부를 흰색으로 채움 **
+                foreach (OpenCvSharp.Point[] contour in contours)
+                {
+                    image.FillConvexPoly(contour, Scalar.White, LineTypes.AntiAlias);
+                }
+
+                // 이미지 저장
+                string out_imgPath = out_path + "\\" + file_name;
+                Cv2.ImWrite(out_imgPath, image);
+            }
+
+        }
+
         // ----------------------------------------------------------
         // 1. RGB값을 Gray Scale로 변환
         public Mat toGrayScale(Mat image)
         {
             Mat grayImage = new Mat();
+            Console.WriteLine("test");
+            Console.WriteLine("channel before convert : " + image.Channels());
             Cv2.CvtColor(image, grayImage, ColorConversionCodes.BGR2GRAY);
+            Console.WriteLine("channel after convert : " + grayImage.Channels());
             return grayImage;
         }
 

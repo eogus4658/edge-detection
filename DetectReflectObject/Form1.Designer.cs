@@ -36,6 +36,8 @@ namespace DetectReflectObject
             this.cannyButton = new System.Windows.Forms.Button();
             this.contourLabel = new System.Windows.Forms.Label();
             this.detectContourButton = new System.Windows.Forms.Button();
+            this.runButton = new System.Windows.Forms.Button();
+            this.statusLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,11 +109,32 @@ namespace DetectReflectObject
             this.detectContourButton.UseVisualStyleBackColor = true;
             this.detectContourButton.Click += new System.EventHandler(this.detectContourButton_Click);
             // 
+            // runButton
+            // 
+            this.runButton.Location = new System.Drawing.Point(914, 247);
+            this.runButton.Name = "runButton";
+            this.runButton.Size = new System.Drawing.Size(75, 23);
+            this.runButton.TabIndex = 7;
+            this.runButton.Text = "run";
+            this.runButton.UseVisualStyleBackColor = true;
+            this.runButton.Click += new System.EventHandler(this.runButton_Click);
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.AutoSize = true;
+            this.statusLabel.Location = new System.Drawing.Point(914, 286);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(37, 12);
+            this.statusLabel.TabIndex = 8;
+            this.statusLabel.Text = "ready";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1041, 620);
+            this.Controls.Add(this.statusLabel);
+            this.Controls.Add(this.runButton);
             this.Controls.Add(this.detectContourButton);
             this.Controls.Add(this.contourLabel);
             this.Controls.Add(this.cannyButton);
@@ -136,6 +159,8 @@ namespace DetectReflectObject
         private System.Windows.Forms.Button cannyButton;
         private System.Windows.Forms.Label contourLabel;
         private System.Windows.Forms.Button detectContourButton;
+        private System.Windows.Forms.Button runButton;
+        private System.Windows.Forms.Label statusLabel;
     }
 }
 
