@@ -12,6 +12,24 @@ namespace DetectReflectObject
     {
         private static ManualDetector detector = null;
 
+        // Binary Thresh
+
+        double binary_thresh = 100;
+
+        // Canny Edge Param
+        int canny_thresh1 = 0;
+        int canny_thresh2 = 1100;
+
+        // FindContours Param
+        RetrievalModes retrievalModes = RetrievalModes.Tree;
+        ContourApproximationModes contour_approxModes = ContourApproximationModes.ApproxTC89KCOS;
+
+        //ApproxPolyDP Param
+        double approxRate = 0.02;
+
+        // Noise Param
+        int lengthNoise = 500;
+
         private ManualDetector() {}
 
         public static ManualDetector shared
@@ -42,7 +60,7 @@ namespace DetectReflectObject
                 if(image.Channels() != 1)
                 {
                     image = ManualDetector.shared.toGrayScale(image);
-                    image = ManualDetector.shared.toBinaryScale(image, 100);
+                    image = ManualDetector.shared.toBinaryScale(image, this.binary_thresh);
                     if (image.Channels() != 1)
                     {
                         throw new Exception("이미지 전처리 작업 실패");
@@ -50,10 +68,16 @@ namespace DetectReflectObject
                 }
 
                 // canny edge 이미지 이진화
-                image = cannyEdge(image, 100, 1000);
+                image = cannyEdge(image, this.canny_thresh1, this.canny_thresh2);
 
                 // 외곽선 검출
-                List<Point[]> contours = getContours(image, RetrievalModes.Tree, ContourApproximationModes.ApproxTC89KCOS, 500, 0.02);
+                List<Point[]> contours = getContours(
+                    image, 
+                    this.retrievalModes, 
+                    this.contour_approxModes, 
+                    this.lengthNoise, 
+                    this.approxRate
+                );
 
                 // ** 후처리 작업 - 외곽선 내부를 흰색으로 채움 **
                 foreach (OpenCvSharp.Point[] contour in contours)
@@ -66,6 +90,22 @@ namespace DetectReflectObject
                 Cv2.ImWrite(out_imgPath, image);
             }
 
+        }
+
+        public void SetBinaryParameter(double threshold)
+        {
+            this.binary_thresh = threshold;
+        }
+
+        public void SetCannyParameter(int threshold1, int threshold2)
+        {
+            this.canny_thresh1 = threshold1;
+            this.canny_thresh2 = threshold2;
+        }
+        public void SetContourParameter(int lengthNoise, double approxRate)
+        {
+            this.lengthNoise = lengthNoise;
+            this.approxRate = approxRate;
         }
 
         // ----------------------------------------------------------
