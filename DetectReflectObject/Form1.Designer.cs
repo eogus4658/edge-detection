@@ -38,6 +38,18 @@ namespace DetectReflectObject
             this.detectContourButton = new System.Windows.Forms.Button();
             this.runButton = new System.Windows.Forms.Button();
             this.statusLabel = new System.Windows.Forms.Label();
+            this.binaryThreshLabel = new System.Windows.Forms.Label();
+            this.canny1Label = new System.Windows.Forms.Label();
+            this.canny2Label = new System.Windows.Forms.Label();
+            this.lengthNoiseLabel = new System.Windows.Forms.Label();
+            this.approxrateLabel = new System.Windows.Forms.Label();
+            this.binaryTB = new System.Windows.Forms.TextBox();
+            this.canny1TB = new System.Windows.Forms.TextBox();
+            this.canny2TB = new System.Windows.Forms.TextBox();
+            this.noiselenTB = new System.Windows.Forms.TextBox();
+            this.approxRateTB = new System.Windows.Forms.TextBox();
+            this.gaussianCheck = new System.Windows.Forms.CheckBox();
+            this.gaussianTB = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -111,28 +123,137 @@ namespace DetectReflectObject
             // 
             // runButton
             // 
-            this.runButton.Location = new System.Drawing.Point(914, 247);
+            this.runButton.Location = new System.Drawing.Point(914, 475);
             this.runButton.Name = "runButton";
             this.runButton.Size = new System.Drawing.Size(75, 23);
             this.runButton.TabIndex = 7;
-            this.runButton.Text = "run";
+            this.runButton.Text = "test";
             this.runButton.UseVisualStyleBackColor = true;
             this.runButton.Click += new System.EventHandler(this.runButton_Click);
             // 
             // statusLabel
             // 
             this.statusLabel.AutoSize = true;
-            this.statusLabel.Location = new System.Drawing.Point(914, 286);
+            this.statusLabel.Location = new System.Drawing.Point(885, 514);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(37, 12);
             this.statusLabel.TabIndex = 8;
             this.statusLabel.Text = "ready";
+            // 
+            // binaryThreshLabel
+            // 
+            this.binaryThreshLabel.AutoSize = true;
+            this.binaryThreshLabel.Location = new System.Drawing.Point(875, 340);
+            this.binaryThreshLabel.Name = "binaryThreshLabel";
+            this.binaryThreshLabel.Size = new System.Drawing.Size(40, 12);
+            this.binaryThreshLabel.TabIndex = 9;
+            this.binaryThreshLabel.Text = "binary";
+            // 
+            // canny1Label
+            // 
+            this.canny1Label.AutoSize = true;
+            this.canny1Label.Location = new System.Drawing.Point(875, 365);
+            this.canny1Label.Name = "canny1Label";
+            this.canny1Label.Size = new System.Drawing.Size(46, 12);
+            this.canny1Label.TabIndex = 10;
+            this.canny1Label.Text = "canny1";
+            // 
+            // canny2Label
+            // 
+            this.canny2Label.AutoSize = true;
+            this.canny2Label.Location = new System.Drawing.Point(875, 392);
+            this.canny2Label.Name = "canny2Label";
+            this.canny2Label.Size = new System.Drawing.Size(46, 12);
+            this.canny2Label.TabIndex = 11;
+            this.canny2Label.Text = "canny2";
+            // 
+            // lengthNoiseLabel
+            // 
+            this.lengthNoiseLabel.AutoSize = true;
+            this.lengthNoiseLabel.Location = new System.Drawing.Point(875, 418);
+            this.lengthNoiseLabel.Name = "lengthNoiseLabel";
+            this.lengthNoiseLabel.Size = new System.Drawing.Size(57, 12);
+            this.lengthNoiseLabel.TabIndex = 12;
+            this.lengthNoiseLabel.Text = "noise len";
+            // 
+            // approxrateLabel
+            // 
+            this.approxrateLabel.AutoSize = true;
+            this.approxrateLabel.Location = new System.Drawing.Point(875, 440);
+            this.approxrateLabel.Name = "approxrateLabel";
+            this.approxrateLabel.Size = new System.Drawing.Size(65, 12);
+            this.approxrateLabel.TabIndex = 13;
+            this.approxrateLabel.Text = "approxrate";
+            // 
+            // binaryTB
+            // 
+            this.binaryTB.Location = new System.Drawing.Point(976, 331);
+            this.binaryTB.Name = "binaryTB";
+            this.binaryTB.Size = new System.Drawing.Size(53, 21);
+            this.binaryTB.TabIndex = 14;
+            // 
+            // canny1TB
+            // 
+            this.canny1TB.Location = new System.Drawing.Point(976, 358);
+            this.canny1TB.Name = "canny1TB";
+            this.canny1TB.Size = new System.Drawing.Size(53, 21);
+            this.canny1TB.TabIndex = 15;
+            // 
+            // canny2TB
+            // 
+            this.canny2TB.Location = new System.Drawing.Point(976, 385);
+            this.canny2TB.Name = "canny2TB";
+            this.canny2TB.Size = new System.Drawing.Size(53, 21);
+            this.canny2TB.TabIndex = 16;
+            // 
+            // noiselenTB
+            // 
+            this.noiselenTB.Location = new System.Drawing.Point(976, 412);
+            this.noiselenTB.Name = "noiselenTB";
+            this.noiselenTB.Size = new System.Drawing.Size(53, 21);
+            this.noiselenTB.TabIndex = 17;
+            // 
+            // approxRateTB
+            // 
+            this.approxRateTB.Location = new System.Drawing.Point(976, 439);
+            this.approxRateTB.Name = "approxRateTB";
+            this.approxRateTB.Size = new System.Drawing.Size(53, 21);
+            this.approxRateTB.TabIndex = 18;
+            // 
+            // gaussianCheck
+            // 
+            this.gaussianCheck.AutoSize = true;
+            this.gaussianCheck.Location = new System.Drawing.Point(876, 309);
+            this.gaussianCheck.Name = "gaussianCheck";
+            this.gaussianCheck.Size = new System.Drawing.Size(104, 16);
+            this.gaussianCheck.TabIndex = 19;
+            this.gaussianCheck.Text = "Gaussian Blur";
+            this.gaussianCheck.UseVisualStyleBackColor = true;
+            // 
+            // gaussianTB
+            // 
+            this.gaussianTB.Location = new System.Drawing.Point(986, 304);
+            this.gaussianTB.Name = "gaussianTB";
+            this.gaussianTB.Size = new System.Drawing.Size(53, 21);
+            this.gaussianTB.TabIndex = 20;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1041, 620);
+            this.Controls.Add(this.gaussianTB);
+            this.Controls.Add(this.gaussianCheck);
+            this.Controls.Add(this.approxRateTB);
+            this.Controls.Add(this.noiselenTB);
+            this.Controls.Add(this.canny2TB);
+            this.Controls.Add(this.canny1TB);
+            this.Controls.Add(this.binaryTB);
+            this.Controls.Add(this.approxrateLabel);
+            this.Controls.Add(this.lengthNoiseLabel);
+            this.Controls.Add(this.canny2Label);
+            this.Controls.Add(this.canny1Label);
+            this.Controls.Add(this.binaryThreshLabel);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.runButton);
             this.Controls.Add(this.detectContourButton);
@@ -161,6 +282,18 @@ namespace DetectReflectObject
         private System.Windows.Forms.Button detectContourButton;
         private System.Windows.Forms.Button runButton;
         private System.Windows.Forms.Label statusLabel;
+        private System.Windows.Forms.Label binaryThreshLabel;
+        private System.Windows.Forms.Label canny1Label;
+        private System.Windows.Forms.Label canny2Label;
+        private System.Windows.Forms.Label lengthNoiseLabel;
+        private System.Windows.Forms.Label approxrateLabel;
+        private System.Windows.Forms.TextBox binaryTB;
+        private System.Windows.Forms.TextBox canny1TB;
+        private System.Windows.Forms.TextBox canny2TB;
+        private System.Windows.Forms.TextBox noiselenTB;
+        private System.Windows.Forms.TextBox approxRateTB;
+        private System.Windows.Forms.CheckBox gaussianCheck;
+        private System.Windows.Forms.TextBox gaussianTB;
     }
 }
 

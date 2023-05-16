@@ -16,9 +16,14 @@ namespace DetectReflectObject
         public Form1()
         {
             InitializeComponent();
+            this.binaryTB.Text = ManualDetector.shared.GetBinaryParam().ToString();
+            this.canny1TB.Text = ManualDetector.shared.GetCanny1Param().ToString();
+            this.canny2TB.Text = ManualDetector.shared.GetCanny2Param().ToString();
+            this.noiselenTB.Text = ManualDetector.shared.GetNoiseLength().ToString();
+            this.approxRateTB.Text = ManualDetector.shared.GetApproxRate().ToString();
         }
 
-        
+
         string image_dir = "";
         // Canny Edge Param
         int canny_thresh1 = 0;
@@ -33,6 +38,7 @@ namespace DetectReflectObject
 
         // Noise Param
         int length = 500;
+
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
@@ -57,7 +63,7 @@ namespace DetectReflectObject
         {
             try
             {
-                Mat image = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBoxImage.Image);
+                Mat image = Cv2.ImRead(image_dir);
                 Mat grayImage = ManualDetector.shared.toGrayScale(image);
                 pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(grayImage);
             } catch(Exception ex)
@@ -71,7 +77,8 @@ namespace DetectReflectObject
             try
             {
                 Mat image = OpenCvSharp.Extensions.BitmapConverter.ToMat((Bitmap)pictureBoxImage.Image);
-                Mat binaryImage = ManualDetector.shared.toBinaryScale(image, 100); // image, thresh
+                int binaryParam = int.Parse(this.binaryTB.Text);
+                Mat binaryImage = ManualDetector.shared.toBinaryScale(image, binaryParam); // image, thresh
                 pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(binaryImage);
             }
             catch (Exception ex)
@@ -123,7 +130,17 @@ namespace DetectReflectObject
             string out_path = "C:\\TrueProj.2023\\공간영상 수동반사객체 구현업무\\반사투과 객체 검출 소프트웨어_ETRI_2022년결과\\test\\output";
             try
             {
-                ManualDetector.shared.Run(in_path, out_path);
+                // set param
+                ManualDetector.shared.SetBinaryParameter(double.Parse(this.binaryTB.Text));
+                ManualDetector.shared.SetCannyParameter(int.Parse(this.canny1TB.Text), int.Parse(this.canny2TB.Text));
+                ManualDetector.shared.SetContourParameter(int.Parse(this.noiselenTB.Text), double.Parse(this.approxRateTB.Text));
+                ManualDetector.shared.SetGaussianSigma(int.Parse(this.gaussianTB.Text));
+
+                int contourCount;
+                Mat image = Cv2.ImRead(image_dir);
+                (contourCount, image) = ManualDetector.shared.testRun(image, gaussianCheck.Checked);
+                contourLabel.Text = String.Format("contourCount = {0}", contourCount);
+                pictureBoxImage.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(image);
                 statusLabel.Text = "finished";
             } 
             catch (Exception ex)
@@ -131,6 +148,27 @@ namespace DetectReflectObject
                 MessageBox.Show(ex.Message);
             }
 
+        }
+
+        void FileRun()
+        {
+            statusLabel.Text = "running...";
+            string in_path = "C:\\TrueProj.2023\\공간영상 수동반사객체 구현업무\\반사투과 객체 검출 소프트웨어_ETRI_2022년결과\\test\\input";
+            string out_path = "C:\\TrueProj.2023\\공간영상 수동반사객체 구현업무\\반사투과 객체 검출 소프트웨어_ETRI_2022년결과\\test\\output";
+            try
+            {
+                // set param
+                ManualDetector.shared.SetBinaryParameter(double.Parse(this.binaryTB.Text));
+                ManualDetector.shared.SetCannyParameter(int.Parse(this.canny1TB.Text), int.Parse(this.canny2TB.Text));
+                ManualDetector.shared.SetContourParameter(int.Parse(this.noiselenTB.Text), double.Parse(this.approxRateTB.Text));
+
+                ManualDetector.shared.Run(in_path, out_path);
+                statusLabel.Text = "finished";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

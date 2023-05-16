@@ -30,6 +30,9 @@ namespace DetectReflectObject
         // Noise Param
         int lengthNoise = 500;
 
+        // Gaussian Blur
+        int gaussian_sigma = 2;
+
         private ManualDetector() {}
 
         public static ManualDetector shared
@@ -89,7 +92,46 @@ namespace DetectReflectObject
                 string out_imgPath = out_path + "\\" + file_name;
                 Cv2.ImWrite(out_imgPath, image);
             }
+        }
 
+        // coutourCount, image
+        public (int, Mat) testRun(Mat image, bool is_blur)
+        {
+            Mat res_image = image;
+            // image이 1채널이 아닌 경우 전처리 작업 진행
+            if (res_image.Channels() != 1)
+            {
+                res_image = ManualDetector.shared.toGrayScale(res_image);
+                if (is_blur)
+                {
+                    res_image = ManualDetector.shared.GaussianBlur(res_image, gaussian_sigma);
+                }
+                res_image = ManualDetector.shared.toBinaryScale(res_image, this.binary_thresh);
+                if (res_image.Channels() != 1)
+                {
+                    throw new Exception("이미지 전처리 작업 실패");
+                }
+            }
+
+            // canny edge 이미지 이진화
+            res_image = cannyEdge(res_image, this.canny_thresh1, this.canny_thresh2);
+
+            // 외곽선 검출
+            List<Point[]> contours = getContours(
+                res_image,
+                this.retrievalModes,
+                this.contour_approxModes,
+                this.lengthNoise,
+                this.approxRate
+            );
+
+            // ** 후처리 작업 - 외곽선 내부를 흰색으로 채움 **
+            foreach (OpenCvSharp.Point[] contour in contours)
+            {
+                res_image.FillConvexPoly(contour, Scalar.White, LineTypes.AntiAlias);
+            }
+
+            return (contours.Count, res_image);
         }
 
         public void SetBinaryParameter(double threshold)
@@ -108,11 +150,17 @@ namespace DetectReflectObject
             this.approxRate = approxRate;
         }
 
+        public void SetGaussianSigma(int sigma)
+        {
+            this.gaussian_sigma = sigma;
+        }
+
         public double GetBinaryParam() { return this.binary_thresh; }
         public int GetCanny1Param() { return this.canny_thresh1; }
         public int GetCanny2Param() { return this.canny_thresh2; }
         public int GetNoiseLength() { return this.lengthNoise; }
         public double GetApproxRate() { return this.approxRate; }
+        public int GetGaussianSigma() { return this.gaussian_sigma; }
 
         // ----------------------------------------------------------
         // 1. RGB값을 Gray Scale로 변환
@@ -124,6 +172,13 @@ namespace DetectReflectObject
             Cv2.CvtColor(image, grayImage, ColorConversionCodes.BGR2GRAY);
             Console.WriteLine("channel after convert : " + grayImage.Channels());
             return grayImage;
+        }
+
+        public Mat GaussianBlur(Mat image, int sigma)
+        {
+            Mat blurImage = new Mat();
+            Cv2.GaussianBlur(image, blurImage, new Size(5, 5), sigma);
+            return blurImage;
         }
 
         // 2. Gray Scale -> Binary Scale
@@ -166,10 +221,9 @@ namespace DetectReflectObject
                 double length = Cv2.ArcLength(p, true);
                 if (length > lengthNoise) // 윤곽선 길이 lengthNoise 이하는 무시
                 {
-                    new_contours.Add(p);
                     // 추출한 외곽선 근사화 (근사치 정확도 : 전체 길이의 x%, 하이퍼파라미터)
-                    //Point[] new_points = Cv2.ApproxPolyDP(p, length * approxRate, true);
-                    //new_contours.Add(new_points);
+                    Point[] new_points = Cv2.ApproxPolyDP(p, length * approxRate, true);
+                    new_contours.Add(new_points);
                     //if (new_points.Length == 4) // 코너가 4개인 것만 외곽선에 추가
                     //{
                     //    new_contours.Add(new_points);
