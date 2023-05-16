@@ -108,6 +108,12 @@ namespace DetectReflectObject
             this.approxRate = approxRate;
         }
 
+        public double GetBinaryParam() { return this.binary_thresh; }
+        public int GetCanny1Param() { return this.canny_thresh1; }
+        public int GetCanny2Param() { return this.canny_thresh2; }
+        public int GetNoiseLength() { return this.lengthNoise; }
+        public double GetApproxRate() { return this.approxRate; }
+
         // ----------------------------------------------------------
         // 1. RGB값을 Gray Scale로 변환
         public Mat toGrayScale(Mat image)
