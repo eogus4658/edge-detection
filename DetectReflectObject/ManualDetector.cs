@@ -50,7 +50,7 @@ namespace DetectReflectObject
         // toBinaryScale 1 param
         // cannyEdge 2 param
         // in_path 경로의 이미지들을 읽어서 반사객체 검출한 이미지를 out_path에 저장
-        public void Run(string in_path, string out_path)
+        public void Run(string in_path, string out_path, bool is_blur)
         {
             string[] inputFiles = Directory.GetFiles(in_path);
             foreach(string image_dir in inputFiles)
@@ -63,6 +63,9 @@ namespace DetectReflectObject
                 if(image.Channels() != 1)
                 {
                     image = ManualDetector.shared.toGrayScale(image);
+                    if (is_blur)
+                        image = ManualDetector.shared.GaussianBlur(image, gaussian_sigma);
+
                     image = ManualDetector.shared.toBinaryScale(image, this.binary_thresh);
                     if (image.Channels() != 1)
                     {

@@ -162,14 +162,20 @@ namespace DetectReflectObject
                 ManualDetector.shared.SetBinaryParameter(double.Parse(this.binaryTB.Text));
                 ManualDetector.shared.SetCannyParameter(int.Parse(this.canny1TB.Text), int.Parse(this.canny2TB.Text));
                 ManualDetector.shared.SetContourParameter(int.Parse(this.noiselenTB.Text), double.Parse(this.approxRateTB.Text));
+                ManualDetector.shared.SetGaussianSigma(int.Parse(this.gaussianTB.Text));
 
-                ManualDetector.shared.Run(in_path, out_path);
+                ManualDetector.shared.Run(in_path, out_path, this.gaussianCheck.Checked);
                 statusLabel.Text = "finished";
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void batchRunButton_Click(object sender, EventArgs e)
+        {
+            FileRun();
         }
     }
 }

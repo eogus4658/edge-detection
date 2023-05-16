@@ -50,6 +50,7 @@ namespace DetectReflectObject
             this.approxRateTB = new System.Windows.Forms.TextBox();
             this.gaussianCheck = new System.Windows.Forms.CheckBox();
             this.gaussianTB = new System.Windows.Forms.TextBox();
+            this.batchRunButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -237,11 +238,22 @@ namespace DetectReflectObject
             this.gaussianTB.Size = new System.Drawing.Size(53, 21);
             this.gaussianTB.TabIndex = 20;
             // 
+            // batchRunButton
+            // 
+            this.batchRunButton.Location = new System.Drawing.Point(887, 560);
+            this.batchRunButton.Name = "batchRunButton";
+            this.batchRunButton.Size = new System.Drawing.Size(75, 23);
+            this.batchRunButton.TabIndex = 21;
+            this.batchRunButton.Text = "Run Batch";
+            this.batchRunButton.UseVisualStyleBackColor = true;
+            this.batchRunButton.Click += new System.EventHandler(this.batchRunButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1041, 620);
+            this.Controls.Add(this.batchRunButton);
             this.Controls.Add(this.gaussianTB);
             this.Controls.Add(this.gaussianCheck);
             this.Controls.Add(this.approxRateTB);
@@ -294,6 +306,7 @@ namespace DetectReflectObject
         private System.Windows.Forms.TextBox approxRateTB;
         private System.Windows.Forms.CheckBox gaussianCheck;
         private System.Windows.Forms.TextBox gaussianTB;
+        private System.Windows.Forms.Button batchRunButton;
     }
 }
 
