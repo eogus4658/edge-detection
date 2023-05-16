@@ -21,6 +21,7 @@ namespace DetectReflectObject
             this.canny2TB.Text = ManualDetector.shared.GetCanny2Param().ToString();
             this.noiselenTB.Text = ManualDetector.shared.GetNoiseLength().ToString();
             this.approxRateTB.Text = ManualDetector.shared.GetApproxRate().ToString();
+            this.gaussianTB.Text = ManualDetector.shared.GetGaussianSigma().ToString();
         }
 
 
