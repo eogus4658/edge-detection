@@ -88,15 +88,18 @@ namespace DetectReflectObject
                     this.approxRate
                 );
 
+                // 검정 이미지 생성
+                Mat black_canvas = Mat.Zeros(image.Size(), MatType.CV_8UC1);
+
                 // ** 후처리 작업 - 외곽선 내부를 흰색으로 채움 **
                 foreach (OpenCvSharp.Point[] contour in contours)
                 {
-                    image.FillConvexPoly(contour, Scalar.White, LineTypes.AntiAlias);
+                    black_canvas.FillConvexPoly(contour, Scalar.White, LineTypes.AntiAlias);
                 }
 
                 // 이미지 저장
                 string out_imgPath = out_path + "\\" + file_name;
-                Cv2.ImWrite(out_imgPath, image);
+                Cv2.ImWrite(out_imgPath, black_canvas);
             }
         }
 
