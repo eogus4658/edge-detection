@@ -164,7 +164,7 @@ namespace DetectReflectObject
                 ManualDetector.shared.SetContourParameter(int.Parse(this.noiselenTB.Text), double.Parse(this.approxRateTB.Text));
                 ManualDetector.shared.SetGaussianSigma(int.Parse(this.gaussianTB.Text));
 
-                ManualDetector.shared.Run(in_path, out_path, this.gaussianCheck.Checked);
+                ManualDetector.shared.Run(in_path, out_path,ManualDetector.DetectMode.RGB, this.gaussianCheck.Checked);
                 statusLabel.Text = "finished";
             }
             catch (Exception ex)

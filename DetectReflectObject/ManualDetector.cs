@@ -11,6 +11,11 @@ namespace DetectReflectObject
     public class ManualDetector
     {
         private static ManualDetector detector = null;
+        public enum DetectMode
+        {
+            RGB,
+            Binary
+        }
 
         // Binary Thresh
 
@@ -47,10 +52,8 @@ namespace DetectReflectObject
             }
         }
 
-        // toBinaryScale 1 param
-        // cannyEdge 2 param
         // in_path 경로의 이미지들을 읽어서 반사객체 검출한 이미지를 out_path에 저장
-        public void Run(string in_path, string out_path, bool is_blur)
+        public void Run(string in_path, string out_path, DetectMode mode , bool is_blur)
         {
             string[] inputFiles = Directory.GetFiles(in_path);
             foreach(string image_dir in inputFiles)
@@ -59,8 +62,8 @@ namespace DetectReflectObject
                 // 이미지 불러오기
                 Mat image = Cv2.ImRead(image_dir);
 
-                // image이 1채널이 아닌 경우 전처리 작업 진행
-                if(image.Channels() != 1)
+                // RGB 이미지 기반인 경우, 이미지 전처리 진행
+                if(mode == DetectMode.RGB)
                 {
                     image = ManualDetector.shared.toGrayScale(image);
                     if (is_blur)
