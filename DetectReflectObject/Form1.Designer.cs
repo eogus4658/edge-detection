@@ -173,9 +173,9 @@ namespace DetectReflectObject
             this.lengthNoiseLabel.AutoSize = true;
             this.lengthNoiseLabel.Location = new System.Drawing.Point(875, 418);
             this.lengthNoiseLabel.Name = "lengthNoiseLabel";
-            this.lengthNoiseLabel.Size = new System.Drawing.Size(57, 12);
+            this.lengthNoiseLabel.Size = new System.Drawing.Size(93, 12);
             this.lengthNoiseLabel.TabIndex = 12;
-            this.lengthNoiseLabel.Text = "noise len";
+            this.lengthNoiseLabel.Text = "외곽선 최소길이";
             // 
             // approxrateLabel
             // 

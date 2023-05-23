@@ -19,7 +19,7 @@ namespace DetectReflectObject
 
         // Binary Thresh
 
-        double binary_thresh = 100;
+        double binary_thresh = 128;
 
         // Canny Edge Param
         int canny_thresh1 = 0;
@@ -33,10 +33,10 @@ namespace DetectReflectObject
         double approxRate = 0.02;
 
         // Noise Param
-        int lengthNoise = 500;
+        int lengthNoise = 2000;
 
         // Gaussian Blur
-        int gaussian_sigma = 2;
+        int gaussian_sigma = 4;
 
         private ManualDetector() {}
 
@@ -106,6 +106,8 @@ namespace DetectReflectObject
         // coutourCount, image
         public (int, Mat) testRun(Mat image, bool is_blur)
         {
+            // 검정 이미지 생성
+            Mat black_canvas = Mat.Zeros(image.Size(), MatType.CV_8UC1);
             Mat res_image = image;
             // image이 1채널이 아닌 경우 전처리 작업 진행
             if (res_image.Channels() != 1)
@@ -137,10 +139,10 @@ namespace DetectReflectObject
             // ** 후처리 작업 - 외곽선 내부를 흰색으로 채움 **
             foreach (OpenCvSharp.Point[] contour in contours)
             {
-                res_image.FillConvexPoly(contour, Scalar.White, LineTypes.AntiAlias);
+                black_canvas.FillConvexPoly(contour, Scalar.White, LineTypes.AntiAlias);
             }
 
-            return (contours.Count, res_image);
+            return (contours.Count, black_canvas);
         }
 
         public void SetBinaryParameter(double threshold)
@@ -232,11 +234,10 @@ namespace DetectReflectObject
                 {
                     // 추출한 외곽선 근사화 (근사치 정확도 : 전체 길이의 x%, 하이퍼파라미터)
                     Point[] new_points = Cv2.ApproxPolyDP(p, length * approxRate, true);
-                    new_contours.Add(new_points);
-                    //if (new_points.Length == 4) // 코너가 4개인 것만 외곽선에 추가
-                    //{
-                    //    new_contours.Add(new_points);
-                    //}
+                    if (new_points.Length >= 4) // 코너가 4개 이상인 것만 외곽선에 추가
+                    {
+                        new_contours.Add(new_points);
+                    }
                 }
             }
             return new_contours;
